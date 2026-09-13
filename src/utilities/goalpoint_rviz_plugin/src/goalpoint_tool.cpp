@@ -49,7 +49,7 @@ void GoalpointTool::odomHandler(const nav_msgs::msg::Odometry::ConstSharedPtr od
   vehicle_z = odom->pose.pose.position.z;
 }
 
-void GoalpointTool::onPoseSet(double x, double y, double theta)
+void GoalpointTool::onPoseSet(double x, double y, double /*theta*/)
 {
   sensor_msgs::msg::Joy joy;
 

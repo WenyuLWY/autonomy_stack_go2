@@ -151,7 +151,7 @@ private:
 
     // Rest of your callback functions...
 
-    inline void ResetGraphCallBack(const std_msgs::msg::Empty::SharedPtr msg) {
+    inline void ResetGraphCallBack(const std_msgs::msg::Empty::SharedPtr /*msg*/) {
         is_reset_env_ = true;
     }
 
@@ -190,14 +190,14 @@ private:
         }
     }
 
-    inline void ReadFileCommand(const std_msgs::msg::String::SharedPtr msg) {
+    inline void ReadFileCommand(const std_msgs::msg::String::SharedPtr /*msg*/) {
         if (!FARUtil::IsDebug) { // Terminal Output
             printf("\033[2J"), printf("\033[0;0H"); // cleanup screen
             FakeTerminalInit();
         }
     }
 
-    inline void SaveFileCommand(const std_msgs::msg::String::SharedPtr msg) {
+    inline void SaveFileCommand(const std_msgs::msg::String::SharedPtr /*msg*/) {
         if (!FARUtil::IsDebug) { // Terminal Output
             printf("\033[2J"), printf("\033[0;0H"); // cleanup screen
             FakeTerminalInit();

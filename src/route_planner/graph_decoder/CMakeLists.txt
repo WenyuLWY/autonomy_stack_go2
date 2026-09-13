@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 project(graph_decoder)
 
+if(POLICY CMP0074)
+  cmake_policy(SET CMP0074 NEW)
+endif()
+
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
@@ -16,7 +20,7 @@ find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(visibility_graph_msg REQUIRED)
 find_package(pcl_conversions REQUIRED)
-find_package(PCL REQUIRED)
+find_package(PCL QUIET REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
 ###########

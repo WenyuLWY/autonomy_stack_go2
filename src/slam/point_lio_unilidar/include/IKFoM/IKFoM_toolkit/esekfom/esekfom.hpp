@@ -39,7 +39,9 @@
 #include <vector>
 #include <cstdlib>
 
-#include <boost/bind.hpp>
+// #include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
+using namespace boost::placeholders;
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <Eigen/Dense>

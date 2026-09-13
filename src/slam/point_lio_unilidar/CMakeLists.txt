@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 project(point_lio_unilidar)
 
+if(POLICY CMP0074)
+  cmake_policy(SET CMP0074 NEW)
+endif()
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
@@ -61,7 +65,7 @@ find_package(tf2_sensor_msgs REQUIRED)
 find_package(tf2_eigen REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(Eigen3 REQUIRED) 
-find_package(PCL REQUIRED COMPONENTS common io)
+find_package(PCL QUIET REQUIRED COMPONENTS common io)
 
 find_package(Eigen3 REQUIRED)
 find_package(PCL 1.8 REQUIRED)

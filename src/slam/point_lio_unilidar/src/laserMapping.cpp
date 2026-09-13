@@ -18,7 +18,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <tf2/transform_datatypes.h>
 #include <tf2/LinearMath/Quaternion.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/transform_listener.h>
 
@@ -454,7 +454,8 @@ void imu_cbk(const sensor_msgs::msg::Imu::ConstSharedPtr msg_in)
 
     publish_count++;
 
-    sensor_msgs::msg::Imu::Ptr msg(new sensor_msgs::msg::Imu(*msg_in));
+    // sensor_msgs::msg::Imu::Ptr msg(new sensor_msgs::msg::Imu(*msg_in));
+    auto msg = std::make_shared<sensor_msgs::msg::Imu>(*msg_in);
 
     msg->header.stamp = get_ros_time(get_time_in_sec(msg_in->header.stamp) - time_lag_imu_to_lidar);
 
