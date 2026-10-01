@@ -290,12 +290,12 @@ int main(int argc, char** argv)
 
   auto subStop = nh->create_subscription<std_msgs::msg::Int8>("/stop", 5, stopHandler);
 
-  auto pubSpeed = nh->create_publisher<geometry_msgs::msg::TwistStamped>("/cmd_vel", 5);
+  auto pubSpeed = nh->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 5);
 
   auto pubGo2Request = nh->create_publisher<unitree_api::msg::Request>("/api/sport/request", 10);
 
-  geometry_msgs::msg::TwistStamped cmd_vel;
-  cmd_vel.header.frame_id = "vehicle";
+  geometry_msgs::msg::Twist cmd_vel;
+  // cmd_vel.header.frame_id = "vehicle";
 
   if (autonomyMode) {
     joySpeed = autonomySpeed / maxSpeed;
@@ -406,20 +406,20 @@ int main(int argc, char** argv)
 
       pubSkipCount--;
       if (pubSkipCount < 0) {
-        cmd_vel.header.stamp = rclcpp::Time(static_cast<uint64_t>(odomTime * 1e9));
+        // cmd_vel.header.stamp = rclcpp::Time(static_cast<uint64_t>(odomTime * 1e9));
         if (fabs(vehicleSpeed) <= maxAccel / 100.0) {
-          cmd_vel.twist.linear.x = 0;
-          cmd_vel.twist.linear.y = 0;
+          cmd_vel.linear.x = 0;
+          cmd_vel.linear.y = 0;
         } else {
-          cmd_vel.twist.linear.x = cos(dirDiff) * vehicleSpeed;
-          cmd_vel.twist.linear.y = -sin(dirDiff) * vehicleSpeed;
+          cmd_vel.linear.x = cos(dirDiff) * vehicleSpeed;
+          cmd_vel.linear.y = -sin(dirDiff) * vehicleSpeed;
         }
-        cmd_vel.twist.angular.z = vehicleYawRate;
+        cmd_vel.angular.z = vehicleYawRate;
         
         if (manualMode) {
-          cmd_vel.twist.linear.x = maxSpeed * joyManualFwd;
-          cmd_vel.twist.linear.y = maxSpeed / 2.0 * joyManualLeft;
-          cmd_vel.twist.angular.z = maxYawRate * PI / 180.0 * joyManualYaw;
+          cmd_vel.linear.x = maxSpeed * joyManualFwd;
+          cmd_vel.linear.y = maxSpeed / 2.0 * joyManualLeft;
+          cmd_vel.angular.z = maxYawRate * PI / 180.0 * joyManualYaw;
         }
 
         pubSpeed->publish(cmd_vel);
@@ -428,11 +428,11 @@ int main(int argc, char** argv)
 
         if (is_real_robot)
         {
-          if (cmd_vel.twist.linear.x == 0 && cmd_vel.twist.linear.y == 0 && cmd_vel.twist.angular.z == 0){
+          if (cmd_vel.linear.x == 0 && cmd_vel.linear.y == 0 && cmd_vel.angular.z == 0){
           	sport_req.StopMove(req);
           }
           else{
-               sport_req.Move(req, cmd_vel.twist.linear.x, cmd_vel.twist.linear.y, cmd_vel.twist.angular.z);
+               sport_req.Move(req, cmd_vel.linear.x, cmd_vel.linear.y, cmd_vel.angular.z);
           }
           pubGo2Request->publish(req);
         }
