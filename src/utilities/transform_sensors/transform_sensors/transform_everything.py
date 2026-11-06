@@ -84,10 +84,8 @@ class Repuber(Node):
         self.body2imu_trans.transform.translation.x = 0.0
         self.body2imu_trans.transform.translation.y = 0.0
         self.body2imu_trans.transform.translation.z = 0.0
-        quat = tf_transformations.quaternion_from_euler(0, 2.87820258505555555556, 3.14159265358)
-        # quat = tf_transformations.quaternion_from_euler(-2.941592653589793, -0.141592653589793, 2.07)
+        # quat = tf_transformations.quaternion_from_euler(0, 2.87820258505555555556, 3.14159265358)
         quat = tf_transformations.quaternion_from_euler(2.89081435, 0.65579363, 1.94364076)
-        # quat = tf_transformations.quaternion_from_euler(0, -3, 3.14159265358)
         self.body2imu_trans.transform.rotation.x = quat[0]
         self.body2imu_trans.transform.rotation.y = quat[1]
         self.body2imu_trans.transform.rotation.z = quat[2]
