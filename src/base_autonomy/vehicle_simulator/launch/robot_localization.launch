@@ -1,0 +1,37 @@
+<launch>
+
+  <!-- <arg name="world_name" default="real_world"/>
+  <arg name="sensorOffsetX" default="0.3"/>
+  <arg name="sensorOffsetY" default="0.0"/>
+  <arg name="cameraOffsetZ" default="0.0"/>
+
+  <!-- <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
+  </include>
+
+  <node pkg="mogi_trajectory_server" exec="mogi_trajectory_server" name="mogi_trajectory_server" output="screen">
+    <param name="trajectory_topic"   value="trajectory" />
+    <param name="reference_frame_id" value="map" />
+    <param name="robot_frame_id"     value="sensor" />
+    <param name="update_rate"        value="5.0" />
+    <param name="publish_rate"       value="5.0" />
+    <param name="min_distance"       value="0.05" />
+    <param name="use_sim_time"       value="false" />
+  </node> -->
+
+
+  <include file="$(find-pkg-share point_lio_unilidar)/launch/mapping_utlidar.launch">
+    <arg name="rviz" value="false"/>
+  </include>
+
+
+  <node launch-prefix="nice" pkg="rviz2" exec="rviz2" name="rvizGA" args="-d $(find-pkg-share vehicle_simulator)/rviz/vehicle_simulator.rviz"/>
+
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="loamInterfaceTransPubMap" args="0 0 0 0 0 0 /map /camera_init"/>
+
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="loamInterfaceTransPubVehicle" args="0 0 0 0 0 0 /aft_mapped /sensor"/>
+
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="vehicleTransPublisher" args="-$(var sensorOffsetX) -$(var sensorOffsetY) 0 0 0 0 /sensor /vehicle"/>
+
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="sensorTransPublisher" args="0 0 $(var cameraOffsetZ) -1.5707963 0 -1.5707963 /sensor /camera"/>
+
+</launch>

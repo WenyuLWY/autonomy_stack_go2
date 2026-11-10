@@ -8,18 +8,18 @@
   <arg name="vehicleY" default="0.0"/>
   <arg name="checkTerrainConn" default="true"/>
 
-  <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
-  </include>
+  <!-- <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
+  </include> -->
 
-<node pkg="mogi_trajectory_server" exec="mogi_trajectory_server" name="mogi_trajectory_server" output="screen">
-  <param name="trajectory_topic"   value="trajectory" />
-  <param name="reference_frame_id" value="map" />
-  <param name="robot_frame_id"     value="sensor" />
-  <param name="update_rate"        value="5.0" />
-  <param name="publish_rate"       value="5.0" />
-  <param name="min_distance"       value="0.05" />
-  <param name="use_sim_time"       value="false" />
-</node>
+  <!-- <node pkg="mogi_trajectory_server" exec="mogi_trajectory_server" name="mogi_trajectory_server" output="screen">
+    <param name="trajectory_topic"   value="trajectory" />
+    <param name="reference_frame_id" value="map" />
+    <param name="robot_frame_id"     value="sensor" />
+    <param name="update_rate"        value="5.0" />
+    <param name="publish_rate"       value="5.0" />
+    <param name="min_distance"       value="0.05" />
+    <param name="use_sim_time"       value="false" />
+  </node> -->
 
   <!-- <node pkg="joy" exec="joy_node" name="ps3_joy" output="screen" >
     <param name="dev" value="/dev/input/js0" />
@@ -61,4 +61,7 @@
 
   <node pkg="tf2_ros" exec="static_transform_publisher" name="loamInterfaceTransPubVehicle" args="0 0 0 0 0 0 /aft_mapped /sensor"/>
 
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="vehicleTransPublisher" args="-$(var sensorOffsetX) -$(var sensorOffsetY) 0 0 0 0 /sensor /vehicle"/>
+  
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="sensorTransPublisher" args="0 0 $(var cameraOffsetZ) -1.5707963 0 -1.5707963 /sensor /camera"/>
 </launch>
